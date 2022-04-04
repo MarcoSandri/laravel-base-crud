@@ -7,7 +7,10 @@
     <div class="container">
 
         <h1>Lista dei fumetti</h1>
-        
+
+        <a href="{{route('comic.create')}}">Aggiungi fumetto</a>
+
+
         <table>
             <thead>
                 <tr>
