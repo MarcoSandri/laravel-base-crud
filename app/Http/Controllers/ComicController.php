@@ -65,9 +65,9 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Comic $comic)
     {
-        //
+        return view('comics.edit', compact('comic'));
     }
 
     /**
@@ -77,9 +77,26 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Comic $comic)
     {
-        //
+        // $request->validate(
+        //     [
+        //         'title' => 'required|min:5',
+        //         'description' => 'required|min:30',
+        //         'thumb' => 'required|url',
+        //         'price' => 'required|numeric|min:0',
+        //         'series' => 'required|min:5',
+        //         'sale_date' => 'required|date'
+        //     ]
+        // );
+
+        $data = $request->all();
+
+        $comic->update($data);
+
+        $comic->save();
+
+        return redirect()->route('comic.show', compact('comic'));
     }
 
     /**
@@ -88,8 +105,10 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comic $comic)
     {
-        //
+        $comic->delete();
+
+        return redirect()->route('comic.index')->with('status', 'Cancellato');
     }
 }
